@@ -5,6 +5,7 @@ class CheckersLogic:
         self.selected = None
         self.board = [[None] * 8 for _ in range(8)]
         self._board_setup()
+        self.must_continue = False
 
     def _board_setup(self):
         for row in range(8):
@@ -16,6 +17,13 @@ class CheckersLogic:
                         self.board[row][col] = 'w'
 
     def click(self, row2, col2):
+        if self.must_continue:
+            row1, col1 = self.selected
+            piece = self.board[row1][col1]
+            if self.move(row1, col1, row2, col2, piece):
+                return True
+            return False
+        
         if self.selected:
             row1, col1 = self.selected
             piece = self.board[row1][col1]
@@ -41,6 +49,7 @@ class CheckersLogic:
         if abs(dir_col) == 1 and self.board[row2][col2] is None:
             if dir_row == direction or piece.isupper():
                 self._move_piece(row1, col1, row2, col2, piece)
+                self.must_continue = False
                 self._switch_turn()
                 return True
 
@@ -55,9 +64,12 @@ class CheckersLogic:
 
                     if self._can_capture(row2, col2):
                         self.selected = (row2, col2)
+                        self.must_continue = True
                         return True
+                    self.must_continue = False
                     self._switch_turn()
                     return True
+                    
         return False
 
     def _move_piece(self, row1, col1, row2, col2, piece):
