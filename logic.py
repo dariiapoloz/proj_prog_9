@@ -17,7 +17,7 @@ class CheckersLogic:
                     elif row > 4:
                         self.board[row][col] = 'w'
 
-    def click(self, row2, col2):
+    def handle_click(self, row2, col2):
         if self.selected:
             row1, col1 = self.selected
             piece = self.board[row1][col1]
