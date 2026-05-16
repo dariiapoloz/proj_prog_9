@@ -26,3 +26,22 @@ class CheckersGUI:
     def _update_label(self):
         turn_text = "Чорні" if self.logic.turn == 'b' else "Білі"
         self.label.config(text=f"Хід: {turn_text}")
+
+ def draw(self):
+        self.canvas.delete("all")
+        for r in range(8):
+            for c in range(8):
+                # Малюємо клітинку
+                color = "gray" if (r + c) % 2 != 0 else "white"
+                if self.logic.selected == (r, c):
+                    color = "green"
+
+                x1, y1 = c * self.CELL_SIZE, r * self.CELL_SIZE
+                x2, y2 = x1 + self.CELL_SIZE, y1 + self.CELL_SIZE
+                self.canvas.create_rectangle(x1, y1, x2, y2, fill=color)
+
+                # Малюємо шашку
+                p = self.logic.board[r][c]
+                if p:
+                    p_color = "black" if p.lower() == 'b' else "white"
+                    self.canvas.create_oval(x1 + 5, y1 + 5, x2 - 5, y2 - 5, fill=p_color)
