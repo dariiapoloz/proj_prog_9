@@ -27,7 +27,7 @@ class CheckersGUI:
         turn_text = "Чорні" if self.logic.turn == 'b' else "Білі"
         self.label.config(text=f"Хід: {turn_text}")
 
- def draw(self):
+    def draw(self):
         self.canvas.delete("all")
         for r in range(8):
             for c in range(8):
@@ -45,3 +45,5 @@ class CheckersGUI:
                 if p:
                     p_color = "black" if p.lower() == 'b' else "white"
                     self.canvas.create_oval(x1 + 5, y1 + 5, x2 - 5, y2 - 5, fill=p_color)
+                    if p.isupper():  # Дамка
+                        self.canvas.create_oval(x1 + 20, y1 + 20, x2 - 20, y2 - 20, fill="gold") 
