@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 class CheckersGUI:
     def __init__(self, root, logic):
@@ -22,10 +23,20 @@ class CheckersGUI:
         if self.logic.handle_click(r, c):
             self.draw()
             self._update_label()
+            self._check_and_show_winner()
 
     def _update_label(self):
-        turn_text = "Чорні" if self.logic.turn == 'b' else "Білі"
-        self.label.config(text=f"Хід: {turn_text}")
+        if self.logic.winner:
+            w_text = "Чорні" if self.logic.winner == 'b' else "Білі"
+            self.label.config(text=f"Перемогли {w_text}!", fg="green")
+        else:
+            turn_text = "Чорні" if self.logic.turn == 'b' else "Білі"
+            self.label.config(text=f"Хід: {turn_text}", fg="black")
+    def _check_and_show_winner(self):
+        #Показує спливаюче вікно, якщо є переможець
+        if self.logic.winner:
+            winner_text = "Чорні" if self.logic.winner == 'b' else "Білі"
+            messagebox.showinfo("Кінець гри", f"Вітаємо! Перемогли {winner_text}!")
 
     def draw(self):
         self.canvas.delete("all")
