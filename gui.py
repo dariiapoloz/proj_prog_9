@@ -46,4 +46,4 @@ class CheckersGUI:
                     p_color = "black" if p.lower() == 'b' else "white"
                     self.canvas.create_oval(x1 + 5, y1 + 5, x2 - 5, y2 - 5, fill=p_color)
                     if p.isupper():  # Дамка
-                        self.canvas.create_oval(x1 + 20, y1 + 20, x2 - 20, y2 - 20, fill="gold") 
+                        self.canvas.create_oval(x1 + 5, y1 + 5, x2 - 5, y2 - 5, outline="#FFD700", width=4) 
